@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from './components/Header'; 
+import Navigator from './navigations';
 
 const App: React.FC = () => {
   return (
-    <Header />
-  )
-}
+    <Navigator />
+  );
+};
  
 export default App;

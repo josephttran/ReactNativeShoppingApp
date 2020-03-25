@@ -25,7 +25,7 @@ const Header: React.FC<PropTypes> = ({ title = "SHOPPING APP" }) => {
         {title}
       </Text>
     </View>
-  )
+  );
 };
 
 export default Header;
