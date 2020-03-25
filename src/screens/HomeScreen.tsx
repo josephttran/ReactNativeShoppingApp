@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import Header from '../components/Header';
 import { Input, InputButton, ShoppingListContainer} from '../components/shoppingList';
 
@@ -58,9 +58,9 @@ const HomeScreen: React.FC = () => {
       };
       //setData(prev => [...prev, newItem])
     } else if (itemInput === ''){
-      alert('Please enter an item');
+      Alert.alert('Please enter an item');
     } else {
-      alert('Please enter a number for quantity');
+      Alert.alert('Please enter a number for quantity');
     }
   }
 

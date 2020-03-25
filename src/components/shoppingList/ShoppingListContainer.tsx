@@ -31,10 +31,10 @@ const ShoppingListContainer: React.FC<PropTypes> = (props) => {
 
 const styles = StyleSheet.create({
   listHeader: {
+    marginTop: 8,
     fontSize: 24
   },
   scrollContainer: {
-    marginTop: 8,
     paddingRight: 8,
     height: 365,
   }
