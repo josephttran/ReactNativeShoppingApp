@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
-
 interface PropTypes {
   formName: string
-  unitAmount: number;
-  price: number;
+  unitAmount: string;
+  price: string;
+  handleUnitChange: (formName: string, text: string) => void;
+  handlePriceChange: (formName: string, text: string) => void;
 }
 
 const UnitPriceForm: React.FC<PropTypes> = (props) => {
@@ -14,11 +15,21 @@ const UnitPriceForm: React.FC<PropTypes> = (props) => {
       <Text style={styles.formName}>{props.formName}</Text>
       <View style={styles.row}>
         <Text style={styles.inputName}>UNITS</Text>
-        <TextInput style={styles.input} keyboardType='number-pad' value={props.unitAmount.toString()}></TextInput>        
+        <TextInput 
+          style={styles.input}
+          keyboardType='number-pad'
+          value={props.unitAmount.toString()}
+          onChangeText={(text) => props.handleUnitChange(props.formName, text)}
+        />        
       </View>
       <View style={styles.row}>
         <Text style={styles.inputName}>PRICE</Text>
-        <TextInput style={styles.input} keyboardType='decimal-pad' value={props.price.toFixed(2)}></TextInput>
+        <TextInput
+          style={styles.input}
+          keyboardType='decimal-pad'
+          value={props.price}
+          onChangeText={(text) => props.handlePriceChange(props.formName, text)}
+        />
       </View>
     </View>
   )
