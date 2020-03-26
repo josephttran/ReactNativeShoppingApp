@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, CheckBox } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import { Checkbox } from '../checkbox';
 
 interface PropTypes {
   done: boolean;
@@ -9,9 +10,13 @@ interface PropTypes {
 }
 
 const Item: React.FC<PropTypes> = (props) => {
+  const checkboxSize = 24;
+
   return (
     <View style={styles.container}>
-      <CheckBox value={props.done} onValueChange={() => props.onValueChange(props.item)}></CheckBox>
+      <TouchableHighlight onPress={() => props.onValueChange(props.item)}>
+        <Checkbox isChecked={props.done} checkboxSize={checkboxSize} />
+      </TouchableHighlight>
       <Text style={[styles.item, styles.itemFontSize]}>{props.item}</Text>
       <Text style={[styles.unit, styles.itemFontSize]}>{props.unit}</Text>
     </View>
@@ -31,7 +36,8 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   item: {
-    flex: 1
+    flex: 1,
+    marginLeft: 4
   },
   unit: {
     backgroundColor: 'gray'
