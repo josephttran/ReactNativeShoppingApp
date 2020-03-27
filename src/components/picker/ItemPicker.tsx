@@ -14,6 +14,7 @@ const ItemPicker: React.FC<PropTypes> = (props) => {
         selectedValue={props.selectedValue}
         onValueChange={(itemValue) => props.setSelectedValue(itemValue)}
       >
+        <Picker.Item label='Please select an option...' value='0' />
         {props.foodList.map(food => <Picker.Item key={food} label={food} value={food}></Picker.Item>)}
       </Picker>
     </View>

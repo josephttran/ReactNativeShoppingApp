@@ -13,7 +13,7 @@ interface DataPropTypes {
 
 const HomeScreen: React.FC = () => {
   const [data, setData] = useState<DataPropTypes[]>([])
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState('0');
   const [unitInput, setUnitInput] = useState('');
 
   useEffect(() => {
@@ -46,13 +46,16 @@ const HomeScreen: React.FC = () => {
       return;
     }
 
-    if (unitInput !== '') {
+    if (selectedValue !== '0' && unitInput !== '') {
+      
       const newItem = { 
         done: false,
         item: selectedValue, 
         unit: unitInput
       };
       setData(prev => [...prev, newItem])
+    } else if (selectedValue === '0') {
+      Alert.alert('Please select an option');
     } else {
       Alert.alert('Please enter a number for quantity');
     }
