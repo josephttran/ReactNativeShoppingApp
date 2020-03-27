@@ -33,7 +33,7 @@ const HomeScreen: React.FC = () => {
       });
     });
   };
-
+  
   const handleQuantityTextChange = (text: string) => {
     if (/^\d+$/.test(text) || text === '') { 
       setUnitInput(text);
@@ -58,6 +58,44 @@ const HomeScreen: React.FC = () => {
     }
   }
 
+  const handlePressDelete = (item: string) => {
+    const newData = data.filter(data => data.item !== item)
+    setData(newData);
+  };
+
+  const handlePressMinus = (item: string) => {
+    setData(prev => {
+      const newData = prev.map(ele => {
+        if (ele.item === item) {
+          const currentUnit = parseInt(ele.unit);
+
+          if (currentUnit > 1) {
+            const newUnit = (currentUnit - 1).toString();
+            return {...ele, unit: newUnit}    
+          }
+        }
+        return ele;
+      });
+
+      return newData;
+    });
+  };
+
+  const handlePressPlus = (item: string) => {
+    setData(prev => {
+      const newData = prev.map(ele => {
+        if (ele.item === item) {
+          const currentUnit = parseInt(ele.unit);
+          const newUnit = (currentUnit + 1).toString();
+          return {...ele, unit: newUnit}    
+        }
+        return ele;
+      });
+
+      return newData;
+    });
+  };
+
   return (
     <View>
       <Header />
@@ -75,7 +113,12 @@ const HomeScreen: React.FC = () => {
           </View>
         </View>
         <InputButton title="Add" handlePress={handlePressAdd} />
-        <ShoppingListContainer data={data} onValueChange={handleCheckBoxChange}/>
+        <ShoppingListContainer 
+          data={data}
+          onValueChange={handleCheckBoxChange}
+          onDeletePress={handlePressDelete}
+          onMinusPress={handlePressMinus}
+          onPlusPress={handlePressPlus}/>
       </View>
     </View>
   );

@@ -11,6 +11,9 @@ type shoppingItem = {
 interface PropTypes {
   data: shoppingItem[];
   onValueChange: (item: string) => void;
+  onDeletePress: (item: string) => void;
+  onMinusPress: (item: string) => void;
+  onPlusPress: (item: string) => void;
 }
 
 const ShoppingListContainer: React.FC<PropTypes> = (props) => {
@@ -20,7 +23,15 @@ const ShoppingListContainer: React.FC<PropTypes> = (props) => {
       <ScrollView style={styles.scrollContainer}>
         {props.data.length > 0 
           ? props.data.map((item, index) => {
-            return <ShoppingItem key={index} done={item.done} item={item.item} unit={item.unit} onValueChange={props.onValueChange}/>
+            return <ShoppingItem 
+              key={index} 
+              done={item.done} 
+              item={item.item} 
+              unit={item.unit} 
+              onValueChange={props.onValueChange}
+              onDeletePress={props.onDeletePress}
+              onMinusPress={props.onMinusPress}
+              onPlusPress={props.onPlusPress}/>
           })
           : <Text>There are no items!</Text>
         }
