@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 interface PropTypes {
   placeholder: string;
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   itemInput: {
-    marginVertical: 8,
     borderColor: 'gray',
     borderRadius: 4,
     borderWidth: 1,

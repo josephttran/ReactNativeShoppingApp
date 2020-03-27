@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import Header from '../components/Header';
 import { Input, InputButton, ShoppingListContainer} from '../components/shoppingList';
+import ItemPicker from '../components/picker/ItemPicker';
+import { foodList } from '../assets/foodList';
 
-const testData = [
-  { done: false, item: 'Paper Towel', unit: '12'},
-  { done: true, item: 'Water', unit: '24'},
-  { done: true, item: 'Milk', unit: '1'},
-  { done: false, item: 'Charger', unit: '1'},
-  { done: false, item: 'Rice', unit: '2'},
-  { done: false, item: 'Beef', unit: '1'},
-  { done: false, item: 'Chicken', unit: '1'},
-  { done: false, item: 'Fish', unit: '1'},
-  { done: false, item: 'Pork', unit: '1'},
-  { done: false, item: 'Butter', unit: '1'},
-];
+interface DataPropTypes {
+  done: boolean;
+  item: string; 
+  unit: string;
+}
 
 const HomeScreen: React.FC = () => {
-  const [data, setData] = useState(testData)
-  const [itemInput, setItemInput] = useState('');
+  const [data, setData] = useState<DataPropTypes[]>([])
+  const [selectedValue, setSelectedValue] = useState('');
   const [unitInput, setUnitInput] = useState('');
 
   useEffect(() => {
@@ -39,10 +34,6 @@ const HomeScreen: React.FC = () => {
     });
   };
 
-  const handleItemTextChange = (text: string) => {
-    setItemInput(text);
-  };
-
   const handleQuantityTextChange = (text: string) => {
     if (/^\d+$/.test(text) || text === '') { 
       setUnitInput(text);
@@ -50,15 +41,18 @@ const HomeScreen: React.FC = () => {
   };
 
   const handlePressAdd = () => {
-    if (itemInput !== '' && unitInput !== '') {
+    if (data?.filter(data => data.item === selectedValue).length > 0) {
+      Alert.alert(`${selectedValue} is already in the shopping list`);
+      return;
+    }
+
+    if (unitInput !== '') {
       const newItem = { 
         done: false,
-        item: itemInput, 
+        item: selectedValue, 
         unit: unitInput
       };
-      //setData(prev => [...prev, newItem])
-    } else if (itemInput === ''){
-      Alert.alert('Please enter an item');
+      setData(prev => [...prev, newItem])
     } else {
       Alert.alert('Please enter a number for quantity');
     }
@@ -69,8 +63,12 @@ const HomeScreen: React.FC = () => {
       <Header />
       <View style={styles.shoppingContainer}>
         <View style={styles.inputContainer}>
-          <View style={styles.inputItem}>
-            <Input value={itemInput} placeholder="Item Name" onChangeText={handleItemTextChange}/>            
+          <View style={styles.itemPicker}>
+            <ItemPicker
+             selectedValue={selectedValue}
+             setSelectedValue={setSelectedValue}
+             foodList={foodList}
+            />
           </View>
           <View style={styles.inputUnit}>
             <Input value={unitInput} placeholder="Quantity" onChangeText={handleQuantityTextChange}/>          
@@ -89,12 +87,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
+    marginVertical: 8,
   },  
-  inputItem: {
+  itemPicker: {
     flex: 4
   },
   inputUnit: {
-    flex: 1
+    flex: 1,
+    marginLeft: 4
   }
 });
 
